@@ -6,27 +6,21 @@ on:
       - 'src/**'
 
 jobs:
-  print-modified-files:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Print Modified Files
-        run: |
-          echo "Modified files:"
-          for file in ${github.event.head_commit.modified[@]}; do
-            echo "- $file"
-          done
-
   build-vue:
     runs-on: ubuntu-22.04
-    if: ${{ github.event_name == 'push' && contains(github.event.head_commit.modified, 'src/vue/') }}
     steps:
       # checkout source code
       - uses: actions/checkout@v2
+      # path filter
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+        filters: |
+          src:
+            - 'src/vue/**'
       # build
       - name: build 1
+        if: steps.changes.outputs.src == 'true'
         shell: pwsh
         working-directory: ./build
         run: |
@@ -38,6 +32,13 @@ jobs:
     steps:
       # checkout source code
       - uses: actions/checkout@v2
+      # path filter
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+        filters: |
+          src:
+            - 'src/dotnet/**'
       # build
       - name: build 1
         shell: pwsh
