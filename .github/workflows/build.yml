@@ -6,6 +6,19 @@ on:
       - 'src/**'
 
 jobs:
+  print-modified-files:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Print Modified Files
+        run: |
+          echo "Modified files:"
+          for file in ${github.event.head_commit.modified[@]}; do
+            echo "- $file"
+          done
+
   build-vue:
     runs-on: ubuntu-22.04
     if: ${{ github.event_name == 'push' && contains(github.event.head_commit.modified, 'src/vue/') }}
