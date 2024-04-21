@@ -1,0 +1,8 @@
+{
+    "mode": "commit/tag",
+    "git": {
+        "branch": "branch",
+        "commit": "commit",
+        "tag": "tag"
+    }
+}

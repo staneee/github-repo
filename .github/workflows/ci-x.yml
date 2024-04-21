@@ -1,0 +1,22 @@
+name: "buildx"
+
+on:
+  push:
+    paths:
+      - 'src/dotnet/**'
+      - 'src/vue/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    name: Build vue
+    needs: [ build-dotnet, build-vue ]
+    steps:
+      # checkout source code
+      - uses: actions/checkout@v2
+      # build
+      - name: build 1
+        shell: pwsh
+        working-directory: ./build
+        run: |
+          Write-Host "Deploy!!!!"
