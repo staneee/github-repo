@@ -15,9 +15,9 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: changes
         with:
-        filters: |
-          src:
-            - 'src/vue/**'
+          filters: |
+            src:
+              - 'src/vue/**'
       # build
       - name: build 1
         if: steps.changes.outputs.src == 'true'
@@ -35,9 +35,9 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: changes
         with:
-        filters: |
-          src:
-            - 'src/dotnet/**'
+          filters: |
+            src:
+              - 'src/dotnet/**'
       # build
       - name: build 1
         if: steps.changes.outputs.src == 'true'
