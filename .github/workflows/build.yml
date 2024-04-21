@@ -28,7 +28,6 @@ jobs:
 
   build-dotnet:
     runs-on: ubuntu-22.04
-    if: ${{ github.event_name == 'push' && contains(github.event.head_commit.modified, 'src/dotnet/') }}
     steps:
       # checkout source code
       - uses: actions/checkout@v2
@@ -41,6 +40,7 @@ jobs:
             - 'src/dotnet/**'
       # build
       - name: build 1
+        if: steps.changes.outputs.src == 'true'
         shell: pwsh
         working-directory: ./build
         run: |
