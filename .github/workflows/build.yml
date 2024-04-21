@@ -25,6 +25,12 @@ jobs:
         working-directory: ./build
         run: |
           Write-Host "Build vue!!!!"
+      # build
+      - name: build 2
+        shell: pwsh
+        working-directory: ./build
+        run: |
+          Write-Host "Build vue!!!!"
 
   build-dotnet:
     runs-on: ubuntu-22.04
