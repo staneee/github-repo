@@ -8,9 +8,13 @@ $rootPath = Split-Path -Parent (Get-Location).Path
 $ciConfigPath = Join-Path $rootPath "src" "ci-config.json"
 $ciConfig = (Get-Content -Path $ciConfigPath -Encoding UTF8) | ConvertFrom-Json
 
+
+# 设置环境变量
+$env:TAG = $ciConfig.image.tag
+
 # 克隆目标仓库代码
 ## git clone https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
-if($ciConfig.mode -eq 'commit'){
+if ($ciConfig.mode -eq 'commit') {
     git clone --depth 1 `
         -b $ciConfig.git.branch `
         $RepoUrl repo-code
@@ -19,7 +23,7 @@ if($ciConfig.mode -eq 'commit'){
     git checkout $ciConfig.git.commit
     Set-Location ..
 }
-if($ciConfig.mode -eq 'tag'){
+if ($ciConfig.mode -eq 'tag') {
     git clone --depth 1 `
         --branch $ciConfig.git.tag `
         $RepoUrl repo-code
