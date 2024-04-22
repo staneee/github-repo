@@ -14,8 +14,10 @@ if($ciConfig.mode -eq 'commit'){
     git clone --depth 1 `
         -b $ciConfig.git.branch `
         $RepoUrl repo-code
+    Set-Location ./repo-code
     git log
     git checkout $ciConfig.git.commit
+    Set-Location ..
 }
 if($ciConfig.mode -eq 'tag'){
     git clone --depth 1 `
