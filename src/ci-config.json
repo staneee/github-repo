@@ -1,8 +1,8 @@
 {
-    "mode": "commit/tag",
+    "mode": "commit",
     "git": {
-        "branch": "branch",
-        "commit": "commit",
+        "branch": "main",
+        "commit": "c7c2b03cb25849cc872cc990eeb1a404689ebad6",
         "tag": "tag"
     }
 }
