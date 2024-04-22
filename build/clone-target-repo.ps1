@@ -11,6 +11,8 @@ $ciConfig = (Get-Content -Path $ciConfigPath -Encoding UTF8) | ConvertFrom-Json
 
 # 设置环境变量
 [Environment]::SetEnvironmentVariable("TAG", $ciConfig.image.tag, "Machine")
+[Environment]::SetEnvironmentVariable("TAG", $ciConfig.image.tag)
+Write-Host "${env:TAG}"
 
 
 # 克隆目标仓库代码
