@@ -31,7 +31,7 @@ if ($ciConfig.mode -eq 'tag') {
 }
 
 # 切换到目标仓库代码
-# Set-Location repo-code
+Set-Location repo-code/build
 
 
 
