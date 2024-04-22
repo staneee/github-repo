@@ -10,8 +10,8 @@ $ciConfig = (Get-Content -Path $ciConfigPath -Encoding UTF8) | ConvertFrom-Json
 
 
 # 设置环境变量
-[Environment]::SetEnvironmentVariable("TAG", $ciConfig.image.tag, "Machine")
-[Environment]::SetEnvironmentVariable("TAG", $ciConfig.image.tag)
+[Environment]::SetEnvironmentVariable("TAG", $ciConfig.branch, "Machine")
+[Environment]::SetEnvironmentVariable("TAG", $ciConfig.branch)
 Write-Host "${env:TAG}"
 
 
@@ -19,24 +19,25 @@ Write-Host "${env:TAG}"
 ## git clone https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
 if ($ciConfig.mode -eq 'commit') {
     git clone --depth 1 `
-        -b $ciConfig.git.branch `
+        -b $ciConfig.branch `
         $RepoUrl repo-code
     Set-Location ./repo-code
     git log
-    git checkout $ciConfig.git.commit
+    git checkout $ciConfig.commit
     Set-Location ..
 }
 if ($ciConfig.mode -eq 'tag') {
     git clone --depth 1 `
-        --branch $ciConfig.git.tag `
+        --branch $ciConfig.branch `
         $RepoUrl repo-code
+    Set-Location ./repo-code
+    git log
+    git checkout $ciConfig.commit
+    Set-Location ..
 }
 
 # 切换到目标仓库代码
 Set-Location repo-code/build
-
-
-
 
 
 
