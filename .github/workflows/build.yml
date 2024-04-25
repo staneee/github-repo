@@ -80,6 +80,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-22.04
+    if: ${{ always() }}
     needs: [ build-dotnet, build-vue ]
     steps:
       # checkout source code
