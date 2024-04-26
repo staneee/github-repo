@@ -48,7 +48,7 @@ jobs:
           ./build.ps1 -ProjectType "vue" -ProjectName "vue" -ImageName "gitlab-action" `
             -DockerfilePath "./src/vue/Dockerfile"
 
-  build-dotnet:
+  build-hostapi:
     runs-on: ubuntu-22.04
     steps:
       # checkout source code
@@ -59,7 +59,7 @@ jobs:
         with:
           filters: |
             src:
-              - 'src/dotnet/**'
+              - 'src/hostapi/**'
       # login docker registry
       - name: Login to Docker Registry
         if: steps.changes.outputs.src == 'true'
@@ -75,19 +75,18 @@ jobs:
         working-directory: ./build
         run: |
           ./clone-target-repo.ps1
-          ./build.ps1 -ProjectType "dotnet" -ProjectName "server" -ImageName "gitlab-action" `
+          ./build.ps1 -ProjectType "dotnet" -ProjectName "hostapi" -ImageName "gitlab-action" `
             -DockerfilePath "./src/aspnet-core/src/Firebytes.Template.Web.Host/Dockerfile"
-
-  deploy:
-    runs-on: ubuntu-22.04
-    if: ${{ always() }}
-    needs: [ build-dotnet, build-vue ]
-    steps:
-      # checkout source code
-      - uses: actions/checkout@v2
-      # build
-      - name: build 1
-        shell: pwsh
-        working-directory: ./build
-        run: |
-          Write-Host "Deploy!!!!"
+  # deploy:
+  #   runs-on: ubuntu-22.04
+  #   if: ${{ always() }}
+  #   needs: [ build-hostapi, build-vue ]
+  #   steps:
+  #     # checkout source code
+  #     - uses: actions/checkout@v2
+  #     # build
+  #     - name: build 1
+  #       shell: pwsh
+  #       working-directory: ./build
+  #       run: |
+  #         Write-Host "Deploy!!!!"
